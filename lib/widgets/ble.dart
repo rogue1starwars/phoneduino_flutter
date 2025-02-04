@@ -70,7 +70,6 @@ class _BLEWidgetState extends State<BLEWidget> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _adapterStateSubscription.cancel();
     _scanResultsSubscription.cancel();
