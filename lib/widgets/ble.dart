@@ -34,14 +34,14 @@ class _BLEWidgetState extends State<BLEWidget> {
     }
 
     // Check for BLE availability
-    _adapterStateSubscription =
-        FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
-      print(state);
-      _adapterState = state;
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    // _adapterStateSubscription =
+    //     FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
+    //   print(state);
+    //   _adapterState = state;
+    //   if (mounted) {
+    //     setState(() {});
+    //   }
+    // });
   }
 
   @override
@@ -148,6 +148,7 @@ class _BLEWidgetState extends State<BLEWidget> {
             style: TextStyle(fontSize: 24),
           ),
         ),
+        Text(text_temp),
         // Text(_scannedResult == null
         //     ? "No device found"
         //     : _scannedResult!.remoteId.str),
