@@ -38,34 +38,34 @@ class _BLEWidgetState extends State<BLEWidget> {
       }
     });
 
-    _scanResultsSubscription =
-        FlutterBluePlus.scanResults.listen((List<ScanResult> results) async {
-      print("results");
-      print("results: $results");
-      if (results.isEmpty) {
-        return;
-      }
-      _scannedResult = results[0].device;
-      if (mounted) {
-        setState(() {});
-      }
-      await results[0].device.connect(autoConnect: true, mtu: null);
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    // _scanResultsSubscription =
+    //     FlutterBluePlus.scanResults.listen((List<ScanResult> results) async {
+    //   print("results");
+    //   print("results: $results");
+    //   if (results.isEmpty) {
+    //     return;
+    //   }
+    //   _scannedResult = results[0].device;
+    //   if (mounted) {
+    //     setState(() {});
+    //   }
+    //   await results[0].device.connect(autoConnect: true, mtu: null);
+    //   if (mounted) {
+    //     setState(() {});
+    //   }
+    // });
 
-    // FlutterBluePlus.cancelWhenScanComplete(_scanResultsSubscription);
+    // // FlutterBluePlus.cancelWhenScanComplete(_scanResultsSubscription);
 
-    if (_scannedResult != null) {
-      _connectionStateSubscription =
-          _scannedResult!.connectionState.listen((state) {
-        if (state == BluetoothConnectionState.disconnected) {
-          _scannedResult!.connect(autoConnect: true, mtu: null);
-          print("Reconnecting...");
-        }
-      });
-    }
+    // if (_scannedResult != null) {
+    //   _connectionStateSubscription =
+    //       _scannedResult!.connectionState.listen((state) {
+    //     if (state == BluetoothConnectionState.disconnected) {
+    //       _scannedResult!.connect(autoConnect: true, mtu: null);
+    //       print("Reconnecting...");
+    //     }
+    //   });
+    // }
   }
 
   @override
@@ -114,20 +114,20 @@ class _BLEWidgetState extends State<BLEWidget> {
       children: [
         TextButton(
           onPressed: () async {
-            if (_adapterState != BluetoothAdapterState.on) {
-              return;
-            }
+            // if (_adapterState != BluetoothAdapterState.on) {
+            //   return;
+            // }
             // Scan for BLE devices
-            try {
-              await FlutterBluePlus.startScan(
-                  withNames: ["UART Service"],
-                  timeout: const Duration(seconds: 10));
-            } catch (e) {
-              print(e);
-            }
-            if (mounted) {
-              setState(() {});
-            }
+            // try {
+            //   await FlutterBluePlus.startScan(
+            //       withNames: ["UART Service"],
+            //       timeout: const Duration(seconds: 10));
+            // } catch (e) {
+            //   print(e);
+            // }
+            // if (mounted) {
+            //   setState(() {});
+            // }
           },
           child: Text(
             _adapterState == BluetoothAdapterState.on
@@ -136,12 +136,12 @@ class _BLEWidgetState extends State<BLEWidget> {
             style: TextStyle(fontSize: 24),
           ),
         ),
-        Text(_scannedResult == null
-            ? "No device found"
-            : _scannedResult!.remoteId.str),
-        TextButton(
-            onPressed: onSearchCharacteristics,
-            child: Text("Search Characteristics")),
+        // Text(_scannedResult == null
+        //     ? "No device found"
+        //     : _scannedResult!.remoteId.str),
+        // TextButton(
+        //     onPressed: onSearchCharacteristics,
+        //     child: Text("Search Characteristics")),
       ],
     );
   }
