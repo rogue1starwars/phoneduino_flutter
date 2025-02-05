@@ -13,7 +13,8 @@ class BLEWidget extends StatefulWidget {
 class _BLEWidgetState extends State<BLEWidget> {
   // For Bluetooth availability
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
-  // late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
+  late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
+  String text_temp = "supported";
 
   // // For BLE scanning
   // BluetoothDevice? _scannedResult;
@@ -24,19 +25,30 @@ class _BLEWidgetState extends State<BLEWidget> {
   // late StreamSubscription<BluetoothConnectionState>
   //     _connectionStateSubscription;
 
+  Future<void> _initBLE() async {
+    if (await FlutterBluePlus.isSupported == false) {
+      setState(() {
+        text_temp = "Not supported";
+      });
+      return;
+    }
+
+    // Check for BLE availability
+    _adapterStateSubscription =
+        FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
+      print(state);
+      _adapterState = state;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
   @override
   initState() {
     super.initState();
 
-    // Check for BLE availability
-    // _adapterStateSubscription =
-    //     FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
-    //   print(state);
-    //   _adapterState = state;
-    //   if (mounted) {
-    //     setState(() {});
-    //   }
-    // });
+    _initBLE();
 
     // _scanResultsSubscription =
     //     FlutterBluePlus.scanResults.listen((List<ScanResult> results) async {
@@ -71,7 +83,7 @@ class _BLEWidgetState extends State<BLEWidget> {
   @override
   void dispose() {
     super.dispose();
-    // _adapterStateSubscription.cancel();
+    _adapterStateSubscription.cancel();
     // _scanResultsSubscription.cancel();
   }
 
