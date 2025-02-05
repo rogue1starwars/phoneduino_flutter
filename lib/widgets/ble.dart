@@ -13,30 +13,30 @@ class BLEWidget extends StatefulWidget {
 class _BLEWidgetState extends State<BLEWidget> {
   // For Bluetooth availability
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
-  late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
+  // late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
 
-  // For BLE scanning
-  BluetoothDevice? _scannedResult;
-  List<BluetoothDevice> _systemDevices = [];
-  late StreamSubscription<List<ScanResult>> _scanResultsSubscription;
+  // // For BLE scanning
+  // BluetoothDevice? _scannedResult;
+  // List<BluetoothDevice> _systemDevices = [];
+  // late StreamSubscription<List<ScanResult>> _scanResultsSubscription;
 
-  // For BLE connection
-  late StreamSubscription<BluetoothConnectionState>
-      _connectionStateSubscription;
+  // // For BLE connection
+  // late StreamSubscription<BluetoothConnectionState>
+  //     _connectionStateSubscription;
 
   @override
   initState() {
     super.initState();
 
     // Check for BLE availability
-    _adapterStateSubscription =
-        FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
-      print(state);
-      _adapterState = state;
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    // _adapterStateSubscription =
+    //     FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
+    //   print(state);
+    //   _adapterState = state;
+    //   if (mounted) {
+    //     setState(() {});
+    //   }
+    // });
 
     // _scanResultsSubscription =
     //     FlutterBluePlus.scanResults.listen((List<ScanResult> results) async {
@@ -71,41 +71,41 @@ class _BLEWidgetState extends State<BLEWidget> {
   @override
   void dispose() {
     super.dispose();
-    _adapterStateSubscription.cancel();
-    _scanResultsSubscription.cancel();
+    // _adapterStateSubscription.cancel();
+    // _scanResultsSubscription.cancel();
   }
 
-  Future onScanPressed() async {
-    try {
-      await FlutterBluePlus.startScan(timeout: const Duration(seconds: 1));
-    } catch (e) {
-      print(e);
-    }
-    if (mounted) {
-      setState(() {});
-    }
-  }
+  // Future onScanPressed() async {
+  //   try {
+  //     await FlutterBluePlus.startScan(timeout: const Duration(seconds: 1));
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   if (mounted) {
+  //     setState(() {});
+  //   }
+  // }
 
-  Future onSearchCharacteristics() async {
-    List<BluetoothService> services = await _scannedResult!.discoverServices();
-    services.forEach((service) {
-      print("Service: ${service.uuid}");
-      service.characteristics.forEach((characteristic) async {
-        print(characteristic.uuid);
-        print("Characteristic: ${characteristic.runtimeType}");
-        try {
-          if (characteristic.uuid.str ==
-              "6e400002-b5a3-f393-e0a9-e50e24dcca9e") {
-            print("Writing...");
-            await (characteristic as BluetoothCharacteristic)
-                .write([0x12, 0x34]);
-          }
-        } catch (e) {
-          print(e);
-        }
-      });
-    });
-  }
+  // Future onSearchCharacteristics() async {
+  //   List<BluetoothService> services = await _scannedResult!.discoverServices();
+  //   services.forEach((service) {
+  //     print("Service: ${service.uuid}");
+  //     service.characteristics.forEach((characteristic) async {
+  //       print(characteristic.uuid);
+  //       print("Characteristic: ${characteristic.runtimeType}");
+  //       try {
+  //         if (characteristic.uuid.str ==
+  //             "6e400002-b5a3-f393-e0a9-e50e24dcca9e") {
+  //           print("Writing...");
+  //           await (characteristic as BluetoothCharacteristic)
+  //               .write([0x12, 0x34]);
+  //         }
+  //       } catch (e) {
+  //         print(e);
+  //       }
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
