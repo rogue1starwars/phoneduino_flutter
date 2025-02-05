@@ -13,7 +13,7 @@ class BLEWidget extends StatefulWidget {
 class _BLEWidgetState extends State<BLEWidget> {
   // For Bluetooth availability
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
-  late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
+  // late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
   String text_temp = "supported";
 
   // // For BLE scanning
@@ -83,7 +83,7 @@ class _BLEWidgetState extends State<BLEWidget> {
   @override
   void dispose() {
     super.dispose();
-    _adapterStateSubscription.cancel();
+    // _adapterStateSubscription.cancel();
     // _scanResultsSubscription.cancel();
   }
 
